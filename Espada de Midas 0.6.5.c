@@ -1,3 +1,4 @@
+//Trabalho feito por Arthur Brackmann Pires e Leonardo Rezende Alles
 #ifdef _WIN32
 #include <windows.h>
 #else
@@ -27,14 +28,14 @@ void ogreIa(char map[][COLM], int entitiesPos[][2], int ogresN,int timer, int og
 void statsDisplay(int hpN, int coinsN, int pointsN, int mapSize, int imortal);
 void coins(int pX, int pY, int *coinsN, int *coinsCounter , int *pointsN, char mapC[][COLM], char map[][COLM]);
 void invulnerable(int timer, int *coinsCounter,int *imortal, int *timer2, int coinsN, int totalMapC);
-void ingameMenu(char dir, int *tela);
+void ingameMenu(char dir, int *tela, int *selected);
 void death(int pXIn, int pYIn, int entitiesPos[][2], int ogresN, char map[][COLM], char mapC[][COLM], int imortal, int *hpN, int *pointsN, int *tela, int enemiesDead[]);
 void gameOver(int *tela);
 int pointsScore();
 int save();
 int load();
 int levels();
-void options(int *tela, int *mapSize);//Abre a tela de opções interativas.
+void options(int *tela, int *mapSize, int selected);//Abre a tela de opções interativas.
 
 int main()
 {
@@ -50,6 +51,7 @@ int main()
     pointsN=0,//Guarda a quantidade de pontos adquiridos.
     totalMapC=0,
     totalMapK=0,
+    selected=0,
     hpN,
     timer=0,
     timer2=0,
@@ -114,7 +116,7 @@ int main()
                 break;
             case 4: system("cls");
                     cursorState(1);
-                    options(&tela,&mapSize);
+                    options(&tela,&mapSize,selected);
                 break;
             case 5: sair=1;
                 break;
@@ -138,7 +140,7 @@ int main()
 
                 coins(entitiesPos[0][0], entitiesPos[0][1], &coinsN, &coinsCounter, &pointsN, mapC, map);
 
-                ingameMenu(dir, &tela);
+                ingameMenu(dir, &tela, &selected);
             }
 
             invulnerable(timer, &coinsCounter, &imortal, &timer2, coinsN, totalMapC);
@@ -387,12 +389,13 @@ void invulnerable(int timer, int *coinsCounter, int *imortal, int *timer2, int c
     }
     if(coinsN==totalMapC) *imortal=1;
 }
-void ingameMenu(char dir, int *tela)
+void ingameMenu(char dir, int *tela, int *selected)
 {
-    int i, n, option=1, selected=0;
+    int i, n, option=1;
     char text[10][20]={"Continuar","Salvar","Carregar","Opções","Sair"};
     char keypress;
 
+    *selected=0;
     if(dir=='\t')
     {
         for(i=0; i<3; i++)
@@ -441,15 +444,20 @@ void ingameMenu(char dir, int *tela)
                         gotoxy((((xM-strlen(text[option-1]))/6)*option)+strlen(text[option-1]),1);
                     }
                 }
-                else if(keypress=='\r') selected=option;
+                else if(keypress=='\r')
+                {
+                    *selected=option;
+                    gotoxy(0,1);
+                    printf("\33[2K");
+                }
             }
-        }while(selected==0);
+        }while(*selected==0);
 
-        if(selected==1) *tela=1;
-        else if(selected==2) *tela=7;
-        else if(selected==3) *tela=2;
-        else if(selected==4) *tela=4;
-        else if(selected==5) *tela=0;
+        if(*selected==1) *tela=1;
+        else if(*selected==2) *tela=7;
+        else if(*selected==3) *tela=2;
+        else if(*selected==4) *tela=4;
+        else if(*selected==5) *tela=0;
     }
 }
 void death(int pXIn, int pYIn, int entitiesPos[][2], int ogresN, char map[][COLM], char mapC[][COLM],int imortal, int *hpN, int *pointsN, int *tela, int enemiesDead[])
@@ -511,7 +519,7 @@ int levels()
 {
 
 }
-void options(int *tela, int *mapSize)
+void options(int *tela, int *mapSize, int selected)
 {
     int i, n, option=1;
     char dir;
@@ -523,7 +531,11 @@ void options(int *tela, int *mapSize)
         gotoxy((xM-n)/2,(yM/3*(i+1)));
         printf("%s", text[i]);
     }
-
+    if(*mapSize!=1)
+    {
+        gotoxy((xM-strlen(text[1]))/2,(yM/3*2));
+        printf("%s", text[*mapSize+1]);
+    }
     gotoxy((xM+strlen(text[1]))/2,(yM/3*2));
     do
     {
@@ -609,4 +621,10 @@ void options(int *tela, int *mapSize)
         }
 
     }while(*tela==4);
+
+    if(selected==4)
+    {
+        *tela=1;
+        system("cls");
+    }
 }
