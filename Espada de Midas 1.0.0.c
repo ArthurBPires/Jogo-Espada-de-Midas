@@ -2,7 +2,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #else
-#error "Sitema não suportado."
+#error "Sitema nÃ£o suportado."
 #endif
 #include <stdio.h>
 #include <math.h>
@@ -32,42 +32,42 @@ typedef struct level
 
 void cursorState(int cursor);//Desativa o cursor se cursor=0 ou o ativa se cursor=1
 void gotoxy(int x, int y);//Vai com o cursor para as coordenadas x e y.
-void menuIn(int *tela, int *selected);//Desenha o menu de inicialização e cria opções interativas.
+void menuIn(int *tela, int *selected);//Desenha o menu de inicializaÃ§Ã£o e cria opÃ§Ãµes interativas.
 void mapDraw(ENTITY entities[], LEVEL level,char map[][COLM],char mapC[][COLM], int mapSize);//Desenha na tela o char de cima(map).
-void leverSwitch(ENTITY player, char mapC[][COLM], char map[][COLM]);//Função que troca o estado das portas se uma alavanca é acionada.
+void leverSwitch(ENTITY player, char mapC[][COLM], char map[][COLM]);//FunÃ§Ã£o que troca o estado das portas se uma alavanca Ã© acionada.
 void playerMov(ENTITY *player, char mapC[][COLM], char map[][COLM]);//Realiza o movimento de player
 void ogreIa(ENTITY *entities, LEVEL level, char map[][COLM], int timer);//Lida com a IA dos ogros.
-void statsDisplay(int hpN, long int coinsN, long int pointsN, int mapSize, int imortal, int levelN);//Desenha na tela algumas informações(pontos,moedas,level).
+void statsDisplay(int hpN, long int coinsN, long int pointsN, int mapSize, int imortal, int levelN);//Desenha na tela algumas informaÃ§Ãµes(pontos,moedas,level).
 void coins(int pX, int pY, long int coinsN[], long int *pointsN, char mapC[][COLM]);//Coleta as moedas quando o player passa por cima.
 void keys(int pX, int pY, int *keysN, char mapC[][COLM]);//Coleta as chaves quando o player passa por cima.
 void invulnerable(ENTITY *player, int timer[], long int coinsN[], int totalMapC);//Controla a invulnerabilidade do player
 void ingameMenu(char dir, int *tela, int *selected);//Controla o menu do jogo.
-void ingameCommands(ENTITY entities[], LEVEL *level, char dir, long int coinsN[], long int *pointsN, int *levelN, int *keysN, int mapSize, char map[][COLM], char mapC[][COLM], int *tela);//Função que lida com os comandos executaveis dentro do jogo.
+void ingameCommands(ENTITY entities[], LEVEL *level, char dir, long int coinsN[], long int *pointsN, int *levelN, int *keysN, int mapSize, char map[][COLM], char mapC[][COLM], int *tela);//FunÃ§Ã£o que lida com os comandos executaveis dentro do jogo.
 void death(ENTITY entities[], LEVEL level, char map[][COLM], char mapC[][COLM], long int *pointsN, int *tela);//Controla a morte de inimigos e players.
 void gameOver(int *tela);//Tela de Game Over.
-int pointsRank(long int pointsN, char nome[]);//Responsável por ranquear a pontuação do jogador no final do jogo.
+int pointsRank(long int pointsN, char nome[]);//ResponsÃ¡vel por ranquear a pontuaÃ§Ã£o do jogador no final do jogo.
 void save_or_load(ENTITY *entities, LEVEL *level, char map[][COLM], char mapC[][COLM], long int *pointsN, int *levelN, long int coinsN[], int *keysN, int timer[], int *tela, int selected, long int saveData[][9]);//Salva ou carrega o jogo de um slot.
 int loadLevel(ENTITY *entities, LEVEL *level, int levelN, char map[][COLM], char mapC[][COLM], int *tela);//Carrega o mapa do level
-void nextLevel(ENTITY *entities, LEVEL *level, int *keysN, int *levelN, char map[][COLM], char mapC[][COLM], int *tela, long int coinsN[], long int pointsN);//Faz o avanço para o próximo nível.
-void options(int *tela, int *mapSize, int selected);//Abre a tela de opções interativas.
+void nextLevel(ENTITY *entities, LEVEL *level, int *keysN, int *levelN, char map[][COLM], char mapC[][COLM], int *tela, long int coinsN[], long int pointsN);//Faz o avanÃ§o para o prÃ³ximo nÃ­vel.
+void options(int *tela, int *mapSize, int selected);//Abre a tela de opÃ§Ãµes interativas.
 
 int main()
 {
     ENTITY entities[LINM*COLM];
     LEVEL level;
-    FILE *save_options;//Arquivo que guarda as opções selecionadas e o saveData.
-    int tela=0, //Nessa variável é guardado qual a tela atual do jogo.
+    FILE *save_options;//Arquivo que guarda as opÃ§Ãµes selecionadas e o saveData.
+    int tela=0, //Nessa variÃ¡vel Ã© guardado qual a tela atual do jogo.
     sair=0, //Flag indicando que o jogo deve terminar.
     mapSize=1; //Indica o tamanho do mapa em unidades: 1x1, 2x2, 3x3...
     int keysN=0,//Guarda quantidade de chaves coletadas
-    selected=0,//Indica qual opção do menu dentro do jogo foi selecionado
+    selected=0,//Indica qual opÃ§Ã£o do menu dentro do jogo foi selecionado
     levelN=1,//Indica o level atual
     timer[2]={0};//Indica tempo decorrido
-    long int saveData[4][9]={0},//Informação relativas ao momento que um save foi feito(data,hora,ponto,moedas...)
+    long int saveData[4][9]={0},//InformaÃ§Ã£o relativas ao momento que um save foi feito(data,hora,ponto,moedas...)
     pointsN=0, //Guarda a quantidade de pontos adquiridos.
-    coinsN[3]={0};//Guarda o número de moedas coletadas.
+    coinsN[3]={0};//Guarda o nÃºmero de moedas coletadas.
 
-    char mapC[LINM][COLM];//Mapa e cópia do mapa
+    char mapC[LINM][COLM];//Mapa e cÃ³pia do mapa
     char map[LINM][COLM];
 
     setlocale(LC_ALL,"Portuguese");
@@ -76,8 +76,8 @@ int main()
 
     if(!(save_options = fopen("options.bin", "rb")))
     {
-        //printf("Arquivo options.bin não encontrado.\n");
-        //Arquivo não encontrado ou é o primeiro Load.
+        //printf("Arquivo options.bin nÃ£o encontrado.\n");
+        //Arquivo nÃ£o encontrado ou Ã© o primeiro Load.
     }
     else
     {
@@ -86,13 +86,13 @@ int main()
             if(fread(&mapSize, sizeof(long int), 1, save_options)==1);
             else
             {
-                printf("Não foi possível achar mapSize em options.bin\n");
+                printf("NÃ£o foi possÃ­vel achar mapSize em options.bin\n");
                 Sleep(2000);
             }
         }
         else
         {
-           printf("Não foi possível achar saveData em options.bin\n");
+           printf("NÃ£o foi possÃ­vel achar saveData em options.bin\n");
            Sleep(2000);
         }
     }
@@ -100,7 +100,7 @@ int main()
 
     do
     {
-        switch(tela)//Switch gerencia as telas á serem mostradas ao jogador.
+        switch(tela)//Switch gerencia as telas Ã¡ serem mostradas ao jogador.
         {
             case 0: system("cls");
                     cursorState(1);
@@ -124,12 +124,9 @@ int main()
             case 6: system("cls");
                     gameOver(&tela);
                 break;
-            case 7: system("cls");
-                    //save(entities, &level, map, mapC, &pointsN, &levelN, coinsN, &keysN, timer, &tela, selected, saveData);
-                break;
         }
 
-        if(tela==1)//Condicionar que vale se o jogo tiver começado.
+        if(tela==1)//Condicionar que vale se o jogo tiver comeÃ§ado.
         {
             if(kbhit())
             {
@@ -137,7 +134,7 @@ int main()
 
                 leverSwitch(entities[0], mapC, map);
 
-                //Muda a posição do jogador se pressionar WASD.
+                //Muda a posiÃ§Ã£o do jogador se pressionar WASD.
                 playerMov(&entities[0], mapC, map);
 
                 coins(entities[0].x, entities[0].y, coinsN, &pointsN, mapC);
@@ -162,13 +159,13 @@ int main()
 
         timer[0]++;
 
-        Sleep(100);//Taxa de atualização da tela em ms.
+        Sleep(100);//Taxa de atualizaÃ§Ã£o da tela em ms.
 
     }while(sair==0);
 
     if(!(save_options = fopen("options.bin", "wb")))
     {
-        printf("Não foi possível criar arquivo options.bin\n");
+        printf("NÃ£o foi possÃ­vel criar arquivo options.bin\n");
         Sleep(2000);
     }
     else
@@ -209,7 +206,7 @@ void menuIn(int *tela, int *selected)
 {
     int i, n, option=1;
     char dir;
-    char text[7][80]={{"A Espada Perdida de Midas"},{"Começar"},{"Carregar"},{"Níveis"},{"Opções"},{"Sair"},("Versão: 1.0.0")};
+    char text[7][80]={{"A Espada Perdida de Midas"},{"ComeÃ§ar"},{"Carregar"},{"NÃ­veis"},{"OpÃ§Ãµes"},{"Sair"},("VersÃ£o: 1.0.0")};
 
     for(i=0; i<6; i++)
     {
@@ -388,7 +385,7 @@ void statsDisplay(int hpN, long int coinsN, long int pointsN, int mapSize, int i
     if(imortal>=1)
     {
         gotoxy(COLM*mapSize+3,mapSize+8);
-        printf("*Você está imortal*");
+        printf("*VocÃª estÃ¡ imortal*");
     }
     else
     {
@@ -432,7 +429,7 @@ void invulnerable(ENTITY *player, int timer[], long int coinsN[], int totalMapC)
 void ingameMenu(char dir, int *tela, int *selected)
 {
     int i, n, option=1;
-    char text[10][20]={"Continuar","Salvar","Carregar","Opções","Sair"};
+    char text[10][20]={"Continuar","Salvar","Carregar","OpÃ§Ãµes","Sair"};
     char keypress;
 
     *selected=0;
@@ -738,7 +735,7 @@ void death(ENTITY entities[], LEVEL level, char map[][COLM], char mapC[][COLM], 
 void gameOver(int *tela)
 {
     int n;
-    char text[50]={"Você Perdeu!"};
+    char text[50]={"VocÃª Perdeu!"};
 
     n = strlen(text);
     gotoxy((xM-n)/2,yM/2);
@@ -760,7 +757,7 @@ int pointsRank(long int pointsN, char nome[])
     }
     while(!feof(rank_arq))
     {
-        fscanf(rank_arq, "Rank %dº: %s \nPontos:%ld \n", &i, &nomef[j][0] , &pointsf[j]);
+        fscanf(rank_arq, "Rank %dÂº: %s \nPontos:%ld \n", &i, &nomef[j][0] , &pointsf[j]);
         j++;
     }
     for(i=0;i<10&&z==-1;i++)
@@ -781,7 +778,7 @@ int pointsRank(long int pointsN, char nome[])
         rewind(rank_arq);
         for(z=0;z<10;z++)
         {
-            if(pointsf[z]!=0) fprintf(rank_arq, "Rank %dº: %s \nPontos:%ld \n", z+1, nomef[z], pointsf[z]);
+            if(pointsf[z]!=0) fprintf(rank_arq, "Rank %dÂº: %s \nPontos:%ld \n", z+1, nomef[z], pointsf[z]);
         }
     }
     fclose(rank_arq);
@@ -902,13 +899,13 @@ void save_or_load(ENTITY *entities, LEVEL *level, char map[][COLM], char mapC[][
                         fprintf(save_file, "Chaves Totais=%d\n", level->keys);
                         fprintf(save_file, "Moedas Totais=%ld\n", coinsN[2]);
                         fprintf(save_file, "Moedas desse level=%ld\n", coinsN[0]);
-                        fprintf(save_file, "Moedas até invul.=%ld\n", coinsN[1]);
+                        fprintf(save_file, "Moedas atÃ© invul.=%ld\n", coinsN[1]);
                         fprintf(save_file, "Moedas Totais=%d\n", level->coins);
                         fprintf(save_file, "Timer=%d\n", timer[0]);
                         fprintf(save_file, "Timer invul.=%d\n", timer[1]);
                         fprintf(save_file, "Entidades Totais=%d\n", level->entitiesN);
-                        fprintf(save_file, "Número de Players=%d\n", level->playerN);
-                        fprintf(save_file, "Número de Ogros=%d\n", level->ogreN);
+                        fprintf(save_file, "NÃºmero de Players=%d\n", level->playerN);
+                        fprintf(save_file, "NÃºmero de Ogros=%d\n", level->ogreN);
 
                         for(i=0; i<level->playerN; i++)
                         {
@@ -952,7 +949,7 @@ void save_or_load(ENTITY *entities, LEVEL *level, char map[][COLM], char mapC[][
                     if(!(save_file = fopen(saveText,"r")))
                     {
                         gotoxy(25+strlen(text[option]), (option*5));
-                        printf("Não foi possível detectar nenhum arquivo salvo nesse slot.\n");
+                        printf("NÃ£o foi possÃ­vel detectar nenhum arquivo salvo nesse slot.\n");
                     }
                     else
                     {
@@ -962,13 +959,13 @@ void save_or_load(ENTITY *entities, LEVEL *level, char map[][COLM], char mapC[][
                         fscanf(save_file, "Chaves Totais=%d\n", &level->keys);
                         fscanf(save_file, "Moedas Totais=%ld\n", &coinsN[2]);
                         fscanf(save_file, "Moedas desse level=%ld\n", &coinsN[0]);
-                        fscanf(save_file, "Moedas até invul.=%ld\n", &coinsN[1]);
+                        fscanf(save_file, "Moedas atÃ© invul.=%ld\n", &coinsN[1]);
                         fscanf(save_file, "Moedas Totais=%d\n", &level->coins);
                         fscanf(save_file, "Timer=%d\n", &timer[0]);
                         fscanf(save_file, "Timer invul.=%d\n", &timer[1]);
                         fscanf(save_file, "Entidades Totais=%d\n", &level->entitiesN);
-                        fscanf(save_file, "Número de Players=%d\n", &level->playerN);
-                        fscanf(save_file, "Número de Ogros=%d\n", &level->ogreN);
+                        fscanf(save_file, "NÃºmero de Players=%d\n", &level->playerN);
+                        fscanf(save_file, "NÃºmero de Ogros=%d\n", &level->ogreN);
 
                         for(i=0; i<level->playerN; i++)
                         {
@@ -1062,7 +1059,7 @@ int loadLevel(ENTITY *entities, LEVEL *level, int levelN, char map[][COLM], char
                         mapC[i][z]=map[i][z];
                         if(map[i][z]=='M') level->coins++;
                         if(map[i][z]=='C') level->keys++;
-                        if(map[i][z]=='J')//Guarda a posição do jogador.
+                        if(map[i][z]=='J')//Guarda a posiÃ§Ã£o do jogador.
                         {
                             entities[level->playerN].x=z;
                             entities[level->playerN].y=i;
@@ -1073,7 +1070,7 @@ int loadLevel(ENTITY *entities, LEVEL *level, int levelN, char map[][COLM], char
                             level->playerN++;
                         }
                     }
-                    else if(map[i][z]=='O'&&x==1)//Guarda a posição dos ogros(o sistema foi feito para permitir qualquer número de inimigos desejado).
+                    else if(map[i][z]=='O'&&x==1)//Guarda a posiÃ§Ã£o dos ogros(o sistema foi feito para permitir qualquer nÃºmero de inimigos desejado).
                     {
                         entities[level->playerN + level->ogreN].x=z;
                         entities[level->playerN + level->ogreN].y=i;
@@ -1107,7 +1104,7 @@ void nextLevel(ENTITY *entities, LEVEL *level, int *keysN, int *levelN, char map
         gotoxy((xM/2)-10, yM/2);
         if(loadLevel(entities, level, *levelN, map, mapC, tela))
         {
-            printf("Você avançou para o nível %d\n", *levelN);
+            printf("VocÃª avanÃ§ou para o nÃ­vel %d\n", *levelN);
 
             Sleep(4000);
 
@@ -1119,7 +1116,7 @@ void nextLevel(ENTITY *entities, LEVEL *level, int *keysN, int *levelN, char map
         }
         else if(*levelN>3)
         {
-            printf("Você ganhou o jogo!");
+            printf("VocÃª ganhou o jogo!");
             Sleep(4000);
             gotoxy((xM/2)-25, yM/2);
             printf("Informe o nome com o qual deseja salvar o score: ");
@@ -1130,7 +1127,7 @@ void nextLevel(ENTITY *entities, LEVEL *level, int *keysN, int *levelN, char map
             rank = pointsRank(pointsN, nome);
             if(rank<=10)
             {
-                printf("Você atingiu %dº lugar no ranking de pontuação total              \n", rank);
+                printf("VocÃª atingiu %dÂº lugar no ranking de pontuaÃ§Ã£o total              \n", rank);
                 Sleep(4000);
             }
             *tela=0;
@@ -1141,7 +1138,7 @@ void options(int *tela, int *mapSize, int selected)
 {
     int i, n, option=1;
     char dir;
-    char text[5][80]={{"Opções"},{"Tamanho do mapa: << Pequeno >>"},{"Voltar"},{"Tamanho do mapa: << Médio >>"},{"Tamanho do mapa: << Grande >>"}};
+    char text[5][80]={{"OpÃ§Ãµes"},{"Tamanho do mapa: << Pequeno >>"},{"Voltar"},{"Tamanho do mapa: << MÃ©dio >>"},{"Tamanho do mapa: << Grande >>"}};
 
     for(i=0; i<3; i++)
     {
